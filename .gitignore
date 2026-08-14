@@ -1,0 +1,53 @@
+# Local environment overrides
+.env
+.env.*
+.env.example
+
+# Python virtual environments
+.venv/
+venv/
+env/
+ENV/
+
+# Python bytecode and tooling caches
+__pycache__/
+*.py[cod]
+*.pyd
+*.so
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.pyre/
+.hypothesis/
+.tox/
+.nox/
+.coverage
+.coverage.*
+htmlcov/
+
+# Packaging and build outputs
+*.egg-info/
+.eggs/
+build/
+dist/
+pip-wheel-metadata/
+
+# Runtime artifacts
+
+logs/
+tmp/
+temp/
+*.log
+*.db
+*.sqlite
+*.sqlite3
+
+# Editor and OS files
+.vscode/
+.idea/
+.DS_Store
+*.swp
+*.swo
+
+# Notebooks
+.ipynb_checkpoints/

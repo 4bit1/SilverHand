@@ -1,0 +1,62 @@
+version: '3.8'
+
+services:
+  qwen:
+    image: qwen:latest
+    ports:
+      - "8000:8000"
+    environment:
+      - MODEL_PATH=/models/qwen
+    volumes:
+      - ./models/qwen:/models/qwen
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile.gpu
+    ports:
+      - "8080:8000"
+    environment:
+      - LLM_BASE_URL=http://qwen:8000/v1
+      - LLM_MODEL=qwen/qwen2.5-72b-instruct
+      - LLM_API_KEY=${LLM_API_KEY}
+      - ASR_MODEL=whisper-large-v3-turbo
+      - ASR_DEVICE=cuda
+      - TTS_PROVIDER=sarvam
+      - SARVAM_API_KEY=${SARVAM_API_KEY}
+      - DATABASE_URL=sqlite:///./data/elderskill.db
+      - AUDIO_RETENTION_SECONDS=0
+      - LOG_LEVEL=INFO
+    volumes:
+      - ./models:/app/models
+      - ./data:/app/data
+    depends_on:
+      qwen:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+
+volumes:
+  redis_data:
