@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>ElderSkill - Dashboard</title>
+    <style>
+        :root { --bg: #FAF8F5; --text: #2C2C2C; --accent: #7A8B5C; --accent-light: #E8EDE0; --border: #E5E0D8; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: Georgia, serif; background: var(--bg); min-height: 100vh; }
+        .header { display: flex; justify-content: space-between; align-items: center; padding: 20px 40px; background: white; border-bottom: 1px solid var(--border); }
+        .brand { font-size: 22px; font-weight: 600; text-decoration: none; color: var(--text); }
+        .nav { display: flex; gap: 20px; align-items: center; font-family: sans-serif; }
+        .nav a { color: #6B6B6B; text-decoration: none; font-size: 14px; }
+        .logout { background: transparent; border: 1px solid #B85C5C; color: #B85C5C; padding: 8px 16px; border-radius: 8px; cursor: pointer; font-size: 14px; }
+        .main { max-width: 800px; margin: 0 auto; padding: 40px 20px; }
+        .card { background: white; border-radius: 12px; padding: 24px; margin-bottom: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); border: 1px solid var(--border); }
+        .card h3 { margin-bottom: 12px; font-size: 16px; }
+        .summary { background: var(--accent-light); padding: 16px; border-radius: 8px; font-size: 15px; line-height: 1.8; color: #444; }
+        .skill-tag { display: inline-block; padding: 6px 14px; background: var(--accent-light); border: 1px solid var(--accent); border-radius: 20px; font-size: 13px; margin: 4px; font-family: sans-serif; }
+        .btn { padding: 12px 24px; background: var(--accent); color: white; border: none; border-radius: 8px; font-size: 14px; cursor: pointer; font-weight: 600; }
+        .btn:hover { background: #6A7A4E; }
+        .progress-bar { width: 100%; height: 6px; background: var(--border); border-radius: 3px; overflow: hidden; margin: 8px 0; }
+        .progress-fill { height: 100%; background: var(--accent); }
+        .info-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin: 12px 0; }
+        .info-item { padding: 12px; background: var(--bg); border-radius: 8px; }
+        .info-label { font-size: 11px; text-transform: uppercase; color: #6B6B6B; font-family: sans-serif; }
+        .info-value { font-size: 14px; font-weight: 500; font-family: sans-serif; }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <a href="/dashboard" class="brand">ElderSkill</a>
+        <nav class="nav">
+            <a href="/dashboard">Dashboard</a>
+            <button class="logout" onclick="logout()">Logout</button>
+        </nav>
+    </header>
+    <main class="main">
+        <h2 id="welcome">Welcome!</h2>
+        <div id="content">Loading...</div>
+    </main>
+    <script>
+        async function loadDashboard() {
+            const userId = localStorage.getItem('elderskill_user_id');
+            if (!userId) { window.location.href = '/auth'; return; }
+            
+            try {
+                const res = await fetch('/api/auth/users/' + userId);
+                if (res.status === 404) { localStorage.clear(); window.location.href = '/auth'; return; }
+                const result = await res.json();
+                
+                if (result.success) {
+                    const user = result.data;
+                    const profile = user.profile || {};
+                    const skills = user.skills || [];
+                    
+                    document.getElementById('welcome').textContent = `Welcome, ${user.full_name || 'User'}!`;
+                    
+                    let html = `
+                        <div class="card">
+                            <h3>👤 Profile Overview</h3>
+                            <div class="info-grid">
+                                <div class="info-item"><div class="info-label">Primary Skill</div><div class="info-value">${profile.primary_skill || 'Not set'}</div></div>
+                                <div class="info-item"><div class="info-label">Experience</div><div class="info-value">${profile.years_of_experience ? profile.years_of_experience + ' years' : 'Not set'}</div></div>
+                                <div class="info-item"><div class="info-label">Location</div><div class="info-value">${profile.location_city || 'Not set'}</div></div>
+                                <div class="info-item"><div class="info-label">Interviews</div><div class="info-value">${profile.interview_count || 0}</div></div>
+                            </div>
+                            <div class="progress-bar"><div class="progress-fill" style="width:${profile.profile_completeness || 0}%"></div></div>
+                            <p style="font-family:sans-serif;font-size:12px;color:#6B6B6B;">${profile.profile_completeness || 0}% complete</p>
+                        </div>
+                    `;
+                    
+                    if (profile.summary) {
+                        html += `<div class="card" style="border: 2px solid #7A8B5C; background: linear-gradient(135deg, #E8EDE0 0%, #D4E0C5 100%);">
+                            <h3 style="text-align:center; color:#4A5D3A; font-size:18px;">✨ Your AI-Generated Profile Summary ✨</h3>
+                            <div class="summary" style="font-size:16px; line-height:2; font-style:italic; text-align:justify;">${profile.summary}</div>
+                        </div>`;
+                    }
+                    
+                    if (skills.length > 0) {
+                        html += '<div class="card"><h3>🛠️ Skills</h3>';
+                        skills.forEach(s => { html += `<span class="skill-tag">${s.skill_name}</span>`; });
+                        html += '</div>';
+                    }
+                    
+                    html += `<div class="card"><button class="btn" onclick="window.location.href='/'">🎤 Start New Interview</button></div>`;
+                    
+                    document.getElementById('content').innerHTML = html;
+                }
+            } catch(e) {
+                console.error('Dashboard error:', e);
+            }
+        }
+        
+        function logout() {
+            localStorage.clear();
+            window.location.href = '/auth';
+        }
+        
+        loadDashboard();
+    </script>
+</body>
+</html>

@@ -38,17 +38,14 @@ class SarvamASR:
         language: Optional[str] = None,
         sample_rate: int = 16000
     ) -> SarvamASRResult:
-        """Transcribe audio using Sarvam AI - CORRECTED API FORMAT"""
         start_time = time.time()
         
         try:
-            # Convert numpy array to int16
             if audio.dtype != np.int16:
                 audio_int16 = (np.clip(audio, -1, 1) * 32768).astype(np.int16)
             else:
                 audio_int16 = audio
             
-            # Create WAV bytes
             wav_buffer = io.BytesIO()
             with wave.open(wav_buffer, 'wb') as wf:
                 wf.setnchannels(1)
@@ -57,21 +54,12 @@ class SarvamASR:
                 wf.writeframes(audio_int16.tobytes())
             
             wav_bytes = wav_buffer.getvalue()
-            logger.info(f"WAV bytes created: {len(wav_bytes)}")
             
-            # Sarvam API expects multipart form data with 'file' field
-            files = {
-                'file': ('audio.wav', wav_bytes, 'audio/wav')
-            }
+            files = {'file': ('audio.wav', wav_bytes, 'audio/wav')}
             
-            # Language code mapping
             lang_map = {
-                'en': 'en-IN',
-                'ta': 'ta-IN',
-                'hi': 'hi-IN',
-                'en-IN': 'en-IN',
-                'ta-IN': 'ta-IN',
-                'hi-IN': 'hi-IN'
+                'en': 'en-IN', 'ta': 'ta-IN', 'hi': 'hi-IN',
+                'en-IN': 'en-IN', 'ta-IN': 'ta-IN', 'hi-IN': 'hi-IN'
             }
             lang_code = lang_map.get(language, 'en-IN')
             
@@ -87,9 +75,6 @@ class SarvamASR:
                 'Accept': 'application/json'
             }
             
-            logger.info(f"Sarvam request: model={self.model}, lang={lang_code}")
-            
-            # Make API call with detailed logging
             with httpx.Client(timeout=60) as client:
                 response = client.post(
                     f"{self.base_url}/speech-to-text",
@@ -98,14 +83,8 @@ class SarvamASR:
                     headers=headers
                 )
                 
-                logger.info(f"Sarvam response status: {response.status_code}")
-                
                 if response.status_code == 200:
                     result = response.json()
-                    logger.info(f"Sarvam response keys: {list(result.keys())}")
-                    logger.info(f"Sarvam full response: {json.dumps(result, indent=2)}")
-                    
-                    # Try different response formats
                     transcript = ""
                     if "transcript" in result:
                         transcript = result["transcript"]
@@ -113,13 +92,11 @@ class SarvamASR:
                         transcript = result["text"]
                     elif "data" in result and "transcript" in result["data"]:
                         transcript = result["data"]["transcript"]
-                    elif "result" in result and "transcript" in result["result"]:
-                        transcript = result["result"]["transcript"]
                     
-                    detected_language = result.get("language_code", result.get("language", language or "unknown"))
+                    detected_language = result.get("language_code", language or "unknown")
                     confidence = float(result.get("confidence", 0.9))
                     
-                    logger.info(f"✅ Sarvam transcript: '{transcript}'")
+                    logger.info(f"✅ Sarvam: '{transcript}'")
                     
                     return SarvamASRResult(
                         text=transcript,
@@ -129,13 +106,9 @@ class SarvamASR:
                         processing_time_ms=int((time.time() - start_time) * 1000),
                         model_version=self.model
                     )
-                    
                 else:
-                    error_text = response.text
-                    logger.error(f"Sarvam API error {response.status_code}: {error_text[:500]}")
-                    raise Exception(f"Sarvam API error: {error_text[:200]}")
+                    raise Exception(f"Sarvam error: {response.text[:200]}")
                     
         except Exception as e:
-            logger.error(f"Sarvam transcription failed: {e}")
+            logger.error(f"Sarvam failed: {e}")
             raise
-
