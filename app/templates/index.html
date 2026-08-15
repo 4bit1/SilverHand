@@ -9,64 +9,63 @@
             --bg: #FAF8F5;
             --text-primary: #2C2C2C;
             --text-secondary: #6B6B6B;
-            --text-muted: #9B9B9B;
             --accent: #7A8B5C;
-            --accent-dark: #6A7A4E;
             --accent-light: #E8EDE0;
             --border: #E5E0D8;
             --error: #B85C5C;
             --success: #4CAF50;
-            --font-serif: Georgia, 'Times New Roman', serif;
-            --font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            --font-serif: Georgia, serif;
+            --font-sans: -apple-system, sans-serif;
         }
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: var(--font-sans); background: var(--bg); color: var(--text-primary); min-height: 100vh; line-height: 1.6; }
+        body { font-family: var(--font-sans); background: var(--bg); color: var(--text-primary); min-height: 100vh; }
         .header { display: flex; justify-content: space-between; align-items: center; padding: 20px 40px; max-width: 1100px; margin: 0 auto; }
         .brand { font-family: var(--font-serif); font-size: 22px; font-weight: 600; text-decoration: none; color: var(--text-primary); }
         .nav { display: flex; gap: 24px; align-items: center; }
         .nav-link { color: var(--text-secondary); text-decoration: none; font-size: 14px; }
-        .dashboard-btn { background: var(--text-primary); color: white; padding: 8px 18px; border-radius: 8px; text-decoration: none; font-size: 14px; }
+        .dashboard-btn { background: var(--text-primary); color: white; padding: 8px 18px; border-radius: 8px; text-decoration: none; font-size: 14px; cursor: pointer; }
         .main { max-width: 700px; margin: 0 auto; padding: 40px 24px 80px; }
-        .conversation-title { font-size: 16px; font-weight: 500; margin-bottom: 12px; }
         .progress-container { margin-bottom: 40px; }
         .progress-info { display: flex; justify-content: space-between; font-size: 14px; color: var(--text-secondary); margin-bottom: 8px; }
         .progress-bar { width: 100%; height: 4px; background: var(--border); border-radius: 2px; overflow: hidden; }
-        .progress-fill { height: 100%; background: var(--accent); border-radius: 2px; transition: width 0.5s ease; }
-        .status-label { font-size: 13px; font-weight: 500; color: var(--accent); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 10px; }
-        .question-text { font-family: var(--font-serif); font-size: 30px; font-weight: 500; line-height: 1.35; letter-spacing: -0.3px; margin-bottom: 24px; }
-        .voice-message { font-size: 14px; color: var(--text-muted); text-align: center; margin-bottom: 20px; min-height: 40px; display: flex; align-items: center; justify-content: center; gap: 8px; }
-        .voice-indicator { display: inline-block; width: 10px; height: 10px; border-radius: 50%; background: #ccc; }
-        .voice-indicator.speaking { background: var(--accent); animation: pulse 1s infinite; }
-        .voice-indicator.listening { background: var(--error); animation: pulse 0.5s infinite; }
-        @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.3; } }
+        .progress-fill { height: 100%; background: var(--accent); transition: width 0.5s; }
+        .status-label { font-size: 13px; color: var(--accent); text-transform: uppercase; margin-bottom: 10px; }
+        .question-text { font-family: var(--font-serif); font-size: 30px; line-height: 1.35; margin-bottom: 24px; }
+        .voice-message { text-align: center; font-size: 14px; color: var(--text-secondary); margin-bottom: 20px; }
         .microphone-section { display: flex; flex-direction: column; align-items: center; margin-bottom: 28px; }
-        .microphone-btn { width: 88px; height: 88px; border-radius: 50%; background: var(--accent); border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.3s ease; box-shadow: 0 4px 12px rgba(122, 139, 92, 0.35); }
-        .microphone-btn:hover { background: var(--accent-dark); transform: scale(1.05); }
+        .microphone-btn { width: 88px; height: 88px; border-radius: 50%; background: var(--accent); border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 12px rgba(122,139,92,0.35); }
         .microphone-btn.recording { background: var(--error); animation: pulse 1.5s infinite; }
-        .microphone-btn.processing { background: #B89B5C; pointer-events: none; }
         .microphone-btn.success { background: var(--success); }
+        @keyframes pulse { 0%{box-shadow:0 0 0 0 rgba(184,92,92,0.4)} 70%{box-shadow:0 0 0 20px rgba(184,92,92,0)} 100%{box-shadow:0 0 0 0 rgba(184,92,92,0)} }
         .microphone-icon { color: white; width: 36px; height: 36px; }
-        .mic-label { margin-top: 10px; font-size: 14px; color: var(--text-secondary); font-weight: 500; }
-        .recording-status { margin-top: 4px; font-size: 13px; color: var(--text-muted); display: none; }
-        .answer-section { margin-bottom: 24px; }
-        .answer-label { font-size: 13px; font-weight: 500; color: var(--text-secondary); margin-bottom: 8px; }
-        .answer-textarea { width: 100%; min-height: 90px; padding: 14px; border: 1px solid var(--border); border-radius: 12px; font-size: 15px; resize: vertical; background: white; }
-        .action-buttons { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-bottom: 32px; }
-        .btn-group { display: flex; gap: 10px; }
-        .btn { padding: 10px 20px; border-radius: 8px; font-size: 14px; cursor: pointer; border: none; transition: all 0.2s; }
+        .mic-label { margin-top: 10px; font-size: 14px; color: var(--text-secondary); }
+        .answer-textarea { width: 100%; min-height: 90px; padding: 14px; border: 1px solid var(--border); border-radius: 12px; font-size: 15px; resize: vertical; margin-bottom: 20px; }
+        .action-buttons { display: flex; justify-content: space-between; gap: 10px; margin-bottom: 30px; }
+        .btn { padding: 10px 20px; border-radius: 8px; font-size: 14px; cursor: pointer; border: none; }
         .btn-primary { background: var(--text-primary); color: white; }
-        .btn-primary:disabled { background: #ccc; cursor: not-allowed; }
-        .btn-secondary { background: transparent; color: var(--text-secondary); border: 1px solid var(--border); }
+        .btn-secondary { background: transparent; border: 1px solid var(--border); color: var(--text-secondary); }
         .transcript-section { padding-top: 20px; border-top: 1px solid var(--border); }
         .transcript-title { font-size: 15px; font-weight: 500; margin-bottom: 12px; }
         .transcript-item { padding: 10px 0; border-bottom: 1px solid var(--border); }
         .transcript-q { font-size: 13px; color: var(--text-secondary); }
         .transcript-a { font-size: 14px; margin-top: 2px; }
-        .summary-section { margin-top: 24px; padding: 24px; background: var(--accent-light); border-radius: 12px; display: none; border: 2px solid var(--accent); }
-        .summary-title { font-weight: 600; color: var(--accent-dark); margin-bottom: 12px; }
-        .summary-text { font-size: 15px; line-height: 1.8; }
+        
+        /* AI SUMMARY - PROMINENT DISPLAY */
+        .ai-summary-section {
+            display: none;
+            margin-top: 30px;
+            padding: 30px;
+            background: linear-gradient(135deg, #E8EDE0 0%, #D4E0C5 100%);
+            border-radius: 16px;
+            border: 2px solid var(--accent);
+            box-shadow: 0 8px 24px rgba(122, 139, 92, 0.25);
+        }
+        .ai-summary-section.show { display: block; animation: fadeIn 0.5s ease; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        .ai-summary-title { font-size: 18px; font-weight: 700; color: #4A5D3A; text-align: center; margin-bottom: 16px; }
+        .ai-summary-text { font-size: 16px; line-height: 2; color: #333; font-style: italic; text-align: justify; }
         .return-home { margin-top: 32px; text-align: center; }
-        .return-link { color: var(--text-muted); text-decoration: none; font-size: 14px; }
+        .return-link { color: var(--text-muted, #9B9B9B); text-decoration: none; font-size: 14px; }
     </style>
 </head>
 <body>
@@ -76,47 +75,36 @@
             <a href="#" class="nav-link">How it works</a>
             <a href="#" class="nav-link">For organisations</a>
             <a href="#" class="nav-link">Trust</a>
-            <a href="#" class="dashboard-btn">Go to my dashboard</a>
+            <a href="/dashboard" class="dashboard-btn">Go to my dashboard</a>
         </nav>
     </header>
 
     <main class="main">
-        <div class="conversation-title">Your conversation</div>
         <div class="progress-container">
             <div class="progress-info"><span id="progressPct">0% complete</span></div>
             <div class="progress-bar"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
         </div>
 
         <div class="status-label" id="statusLabel">Ready</div>
-        <h1 class="question-text" id="questionText">Starting interview...</h1>
+        <h1 class="question-text" id="questionText">Loading...</h1>
 
-        <div class="voice-message" id="voiceMessage">
-            <span class="voice-indicator" id="voiceIndicator"></span>
-            <span id="voiceText">Preparing...</span>
-        </div>
+        <div class="voice-message" id="voiceMessage">Tap the microphone to speak</div>
 
         <div class="microphone-section">
-            <button class="microphone-btn" id="micBtn" aria-label="Toggle recording">
+            <button class="microphone-btn" id="micBtn">
                 <svg class="microphone-icon" fill="currentColor" viewBox="0 0 24 24">
                     <path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3z"/>
                     <path d="M17 11c0 2.76-2.24 5-5 5s-5-2.24-5-5H5c0 3.53 2.61 6.43 6 6.92V21h2v-3.08c3.39-.49 6-3.39 6-6.92h-2z"/>
                 </svg>
             </button>
             <div class="mic-label" id="micLabel">Tap to speak</div>
-            <div class="recording-status" id="recStatus">Recording... <span id="recTime">0:00</span></div>
         </div>
 
-        <div class="answer-section">
-            <div class="answer-label">Your answer</div>
-            <textarea class="answer-textarea" id="answerText" placeholder="Type your answer here..."></textarea>
-        </div>
+        <textarea class="answer-textarea" id="answerText" placeholder="Or type your answer here..."></textarea>
 
         <div class="action-buttons">
-            <div class="btn-group">
-                <button class="btn btn-secondary" onclick="replayQuestion()">🔊 Replay</button>
-                <button class="btn btn-secondary" onclick="history.back()">Go back</button>
-            </div>
-            <button class="btn btn-primary" onclick="submitTextAnswer()" id="continueBtn">Continue</button>
+            <button class="btn btn-secondary" onclick="replayQuestion()">🔊 Replay</button>
+            <button class="btn btn-primary" onclick="submitText()">Continue</button>
         </div>
 
         <div class="transcript-section">
@@ -124,15 +112,14 @@
             <div id="transcriptList"></div>
         </div>
 
-        <div class="summary-section" id="summarySection" style="display:none; margin-top: 32px; padding: 30px; background: linear-gradient(135deg, #E8EDE0 0%, #D4E0C5 100%); border-radius: 16px; border: 2px solid #7A8B5C; box-shadow: 0 8px 24px rgba(122, 139, 92, 0.2);">
-            <div class="summary-title" style="font-size: 20px; font-weight: 700; color: #4A5D3A; margin-bottom: 16px; text-align: center;">
-                ✨ Your AI-Generated Profile Summary ✨
-            </div>
-            <div class="summary-text" id="summaryText" style="font-size: 16px; line-height: 2; color: #333; font-style: italic; text-align: justify;"></div>
+        <!-- AI SUMMARY DISPLAYED BELOW TRANSCRIPT -->
+        <div class="ai-summary-section" id="aiSummarySection">
+            <div class="ai-summary-title">✨ Your AI-Generated Profile Summary ✨</div>
+            <div class="ai-summary-text" id="aiSummaryText"></div>
         </div>
 
         <div class="return-home">
-            <a href="/" class="return-link" onclick="return confirm('Leave?')">Return home</a>
+            <a href="/dashboard" class="return-link">Go to Dashboard →</a>
         </div>
     </main>
 
@@ -144,47 +131,13 @@
         let mediaRecorder = null;
         let audioChunks = [];
         let audioStream = null;
-        let recTimer = null;
-        let currentAudio = null;
-
-        const API = window.location.origin;
-
-        function setVoiceState(state, text) {
-            const indicator = document.getElementById('voiceIndicator');
-            const voiceText = document.getElementById('voiceText');
-            
-            indicator.className = 'voice-indicator';
-            if (state === 'speaking') indicator.classList.add('speaking');
-            if (state === 'listening') indicator.classList.add('listening');
-            
-            voiceText.textContent = text;
-        }
 
         async function startInterview() {
             const userId = localStorage.getItem('elderskill_user_id');
+            if (!userId) { window.location.href = '/auth'; return; }
             
-            // CHECK AUTH FIRST - Redirect to /auth if no user
-            if (!userId) {
-                window.location.href = '/auth';
-                return;
-            }
-            
-            // Verify user exists in database
-            try {
-                const userRes = await fetch(API + '/api/auth/users/' + userId);
-                if (userRes.status === 404) {
-                    localStorage.removeItem('elderskill_user_id');
-                    window.location.href = '/auth';
-                    return;
-                }
-            } catch(e) {
-                window.location.href = '/auth';
-                return;
-            }
-            
-            const res = await fetch(API + '/api/interviews/start', {
-                method: 'POST',
-                headers: {'Content-Type': 'application/json'},
+            const res = await fetch('/api/interviews/start', {
+                method: 'POST', headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify({user_id: userId})
             });
             const result = await res.json();
@@ -194,65 +147,27 @@
                 currentQuestion = result.data.question;
                 document.getElementById('questionText').textContent = currentQuestion;
                 document.getElementById('statusLabel').textContent = 'Ready';
-                await speakQuestion(currentQuestion);
+                speakQuestion();
             }
         }
 
-        async function speakQuestion(question) {
-            setVoiceState('speaking', 'AI is speaking...');
-            document.getElementById('statusLabel').textContent = 'Speaking';
-            
+        async function speakQuestion() {
+            if (!currentQuestion) return;
             try {
-                const res = await fetch(API + '/api/tts', {
-                    method: 'POST',
-                    headers: {'Content-Type': 'application/json'},
-                    body: JSON.stringify({text: question, language: 'en-IN'})
+                const res = await fetch('/api/tts', {
+                    method: 'POST', headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({text: currentQuestion, language: 'en-IN'})
                 });
-                
                 if (res.ok) {
                     const blob = await res.blob();
-                    const url = URL.createObjectURL(blob);
-                    
-                    if (currentAudio) {
-                        currentAudio.pause();
-                        currentAudio = null;
-                    }
-                    
-                    currentAudio = new Audio(url);
-                    currentAudio.volume = 1.0;
-                    
-                    currentAudio.onplay = function() {
-                        setVoiceState('speaking', 'AI is speaking...');
-                    };
-                    
-                    currentAudio.onended = function() {
-                        setVoiceState('idle', 'Tap the microphone to speak');
-                        document.getElementById('statusLabel').textContent = 'Your turn';
-                        document.getElementById('micLabel').textContent = 'Tap to speak';
-                    };
-                    
-                    // AUTO-PLAY
-                    await currentAudio.play().then(() => {
-                        console.log('✅ Auto-playing question');
-                    }).catch(err => {
-                        console.error('Auto-play blocked:', err);
-                        setVoiceState('idle', 'Click "Replay" to hear the question');
-                    });
-                    
-                } else {
-                    setVoiceState('idle', 'Tap the microphone to speak');
+                    const audio = new Audio(URL.createObjectURL(blob));
+                    audio.volume = 1.0;
+                    audio.play().catch(() => {});
                 }
-            } catch(e) {
-                console.error('TTS error:', e);
-                setVoiceState('idle', 'Tap the microphone to speak');
-            }
+            } catch(e) {}
         }
 
-        function replayQuestion() {
-            if (currentQuestion) {
-                speakQuestion(currentQuestion);
-            }
-        }
+        function replayQuestion() { speakQuestion(); }
 
         document.getElementById('micBtn').addEventListener('click', function() {
             if (isRecording) { stopRecording(); } else { startRecording(); }
@@ -260,85 +175,51 @@
 
         async function startRecording() {
             try {
-                // Stop any playing audio
-                if (currentAudio) { currentAudio.pause(); currentAudio = null; }
-                
-                audioStream = await navigator.mediaDevices.getUserMedia({
-                    audio: { echoCancellation: true, noiseSuppression: true, autoGainControl: true }
-                });
-                
-                const mimeType = MediaRecorder.isTypeSupported('audio/webm;codecs=opus') ? 'audio/webm;codecs=opus' : 'audio/webm';
-                mediaRecorder = new MediaRecorder(audioStream, {mimeType: mimeType});
+                audioStream = await navigator.mediaDevices.getUserMedia({audio: true});
+                mediaRecorder = new MediaRecorder(audioStream, {mimeType: 'audio/webm;codecs=opus'});
                 audioChunks = [];
-                
-                mediaRecorder.ondataavailable = function(e) { if (e.data.size > 0) audioChunks.push(e.data); };
+                mediaRecorder.ondataavailable = e => { if (e.data.size > 0) audioChunks.push(e.data); };
                 mediaRecorder.onstop = processAudio;
                 mediaRecorder.start(500);
                 isRecording = true;
-                
-                setVoiceState('listening', 'Recording... Speak now');
                 document.getElementById('micBtn').classList.add('recording');
                 document.getElementById('micLabel').textContent = 'Listening... Click to stop';
-                document.getElementById('recStatus').style.display = 'block';
-                
-                let startTime = Date.now();
-                recTimer = setInterval(function() {
-                    const elapsed = Math.floor((Date.now() - startTime) / 1000);
-                    document.getElementById('recTime').textContent = Math.floor(elapsed/60) + ':' + (elapsed%60 < 10 ? '0' : '') + (elapsed%60);
-                    if (elapsed >= 30) stopRecording();
-                }, 500);
-                
-            } catch(e) {
-                setVoiceState('idle', 'Microphone unavailable. Type answer.');
-            }
+            } catch(e) {}
         }
 
         function stopRecording() {
             if (mediaRecorder && mediaRecorder.state === 'recording') mediaRecorder.stop();
-            if (audioStream) { audioStream.getTracks().forEach(t => t.stop()); audioStream = null; }
-            clearInterval(recTimer);
+            if (audioStream) audioStream.getTracks().forEach(t => t.stop());
             isRecording = false;
-            
             document.getElementById('micBtn').classList.remove('recording');
-            document.getElementById('micBtn').classList.add('processing');
             document.getElementById('micLabel').textContent = 'Processing...';
-            document.getElementById('recStatus').style.display = 'none';
-            setVoiceState('idle', 'Processing your answer...');
         }
 
         async function processAudio() {
-            if (audioChunks.length === 0) { resetMic(); return; }
-            
             const blob = new Blob(audioChunks, {type: 'audio/webm'});
             const formData = new FormData();
             formData.append('audio', blob, 'recording.webm');
             
-            try {
-                const res = await fetch(API + '/api/interviews/' + sessionId + '/answer', {
-                    method: 'POST', body: formData
-                });
-                const result = await res.json();
-                handleAnswerResult(result);
-            } catch(e) { resetMic(); }
+            const res = await fetch('/api/interviews/' + sessionId + '/answer', {method: 'POST', body: formData});
+            const result = await res.json();
+            handleResult(result);
         }
 
-        async function submitTextAnswer() {
+        async function submitText() {
             const text = document.getElementById('answerText').value.trim();
-            if (!text || !sessionId) return;
-            
-            const res = await fetch(API + '/api/interviews/' + sessionId + '/answer', {
+            if (!text) return;
+            const res = await fetch('/api/interviews/' + sessionId + '/answer', {
                 method: 'POST', headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify({text_answer: text})
             });
             const result = await res.json();
             document.getElementById('answerText').value = '';
-            handleAnswerResult(result);
+            handleResult(result);
         }
 
-        function handleAnswerResult(result) {
+        function handleResult(result) {
             if (!result.success) {
-                resetMic();
-                setVoiceState('idle', result.error?.message || 'Error');
+                document.getElementById('micLabel').textContent = 'Tap to speak';
                 return;
             }
             
@@ -354,34 +235,48 @@
             document.getElementById('progressPct').textContent = Math.round(progress * 100) + '% complete';
             document.getElementById('progressFill').style.width = Math.round(progress * 100) + '%';
             
-            document.getElementById('micBtn').classList.remove('processing');
             document.getElementById('micBtn').classList.add('success');
             document.getElementById('micLabel').textContent = 'Answer captured';
             
             if (data.completed) {
                 document.getElementById('progressPct').textContent = '100% complete';
                 document.getElementById('progressFill').style.width = '100%';
-                document.getElementById('micBtn').style.display = 'none';
-                document.getElementById('micLabel').textContent = 'Complete!';
-                document.getElementById('statusLabel').textContent = '🎉 Complete';
                 document.getElementById('questionText').textContent = 'Your conversation is complete!';
-                setVoiceState('idle', 'Interview complete!');
+                document.getElementById('statusLabel').textContent = '🎉 Complete';
+                document.getElementById('micBtn').style.display = 'none';
+                document.getElementById('micLabel').textContent = '';
+                
+                console.log('Completion data:', data);
+                
+                // DISPLAY AI SUMMARY
+                const summarySection = document.getElementById('aiSummarySection');
+                const summaryText = document.getElementById('aiSummaryText');
+                
+                if (data.summary && summarySection && summaryText) {
+                    summaryText.textContent = data.summary;
+                    summarySection.style.display = 'block';
+                    summarySection.classList.add('show');
+                    console.log('✅ AI Summary displayed:', data.summary.substring(0, 100));
+                    
+                    // Scroll to summary
+                    setTimeout(() => {
+                        summarySection.scrollIntoView({behavior: 'smooth', block: 'center'});
+                    }, 500);
+                } else {
+                    console.log('❌ No summary in response or elements missing');
+                    console.log('Summary value:', data.summary);
+                    console.log('Summary section exists:', !!summarySection);
+                }
                 return;
             }
             
-            setTimeout(function() {
-                currentQuestion = data.next_question;
-                resetMic();
+            currentQuestion = data.next_question;
+            setTimeout(() => {
+                document.getElementById('micBtn').classList.remove('success');
+                document.getElementById('micLabel').textContent = 'Tap to speak';
                 document.getElementById('questionText').textContent = currentQuestion;
-                speakQuestion(currentQuestion);
+                speakQuestion();
             }, 1000);
-        }
-
-        function resetMic() {
-            document.getElementById('micBtn').classList.remove('recording', 'processing', 'success');
-            document.getElementById('micLabel').textContent = 'Tap to speak';
-            setVoiceState('idle', 'Tap the microphone to speak');
-            isRecording = false;
         }
 
         startInterview();
