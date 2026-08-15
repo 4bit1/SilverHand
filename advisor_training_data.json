@@ -1,0 +1,226 @@
+{
+    "dataset_size": 100,
+    "skill_distribution": {
+        "SQL": 16,
+        "Pandas": 5,
+        "Statistics": 5,
+        "Tableau": 5,
+        "Python": 12,
+        "Content Marketing": 10,
+        "Analytics": 10,
+        "Social Media": 9,
+        "SEO": 7,
+        "AWS": 12,
+        "Docker": 14,
+        "Azure": 5,
+        "FastAPI": 5,
+        "Django": 5,
+        "Node.js": 6,
+        "MongoDB": 5,
+        "React": 4,
+        "CSS": 5,
+        "Spring Boot": 4,
+        "Java": 4,
+        "Microservices": 4,
+        "Machine Learning": 2,
+        "NLP": 2,
+        "PyTorch": 2,
+        "Tailoring": 10,
+        "Alterations": 10,
+        "Sewing": 11,
+        "Fashion Design": 9,
+        "Embroidery": 10,
+        "Catering": 10,
+        "Food Preparation": 7,
+        "Cooking": 8,
+        "Baking": 9,
+        "Google Ads": 8,
+        "Terraform": 8,
+        "Kubernetes": 7,
+        "UX Research": 1,
+        "Figma": 2,
+        "UI Design": 1,
+        "Adobe XD": 2,
+        "Prototyping": 2,
+        "Interior Work": 10,
+        "Woodworking": 10,
+        "Carpentry": 10,
+        "Furniture Making": 9,
+        "Jenkins": 3,
+        "Irrigation": 8,
+        "Crop Management": 8,
+        "Organic Farming": 8,
+        "Agriculture": 7,
+        "JavaScript": 2,
+        "Teaching": 6,
+        "Training": 8,
+        "Leadership": 9,
+        "Mentoring": 8,
+        "Communication": 6
+    },
+    "primary_skill_distribution": {
+        "Data Science": 7,
+        "Digital Marketing": 11,
+        "Cloud Computing": 6,
+        "Python Development": 5,
+        "Web Development": 6,
+        "Java Development": 4,
+        "Machine Learning": 2,
+        "Tailoring": 13,
+        "Cooking": 10,
+        "DevOps": 5,
+        "UI/UX Design": 2,
+        "Carpentry": 11,
+        "Farming": 9,
+        "Teaching": 9
+    },
+    "location_distribution": {
+        "Kochi": 10,
+        "Trichy": 8,
+        "Coimbatore": 10,
+        "Bangalore": 11,
+        "Hyderabad": 7,
+        "Mumbai": 8,
+        "Pune": 6,
+        "Delhi": 11,
+        "Kolkata": 12,
+        "Madurai": 5,
+        "Chennai": 7,
+        "Ahmedabad": 5
+    },
+    "experience_distribution": {
+        "29": 8,
+        "9": 5,
+        "12": 3,
+        "7": 1,
+        "13": 4,
+        "6": 5,
+        "21": 3,
+        "16": 7,
+        "25": 4,
+        "23": 4,
+        "24": 5,
+        "28": 6,
+        "15": 2,
+        "4": 6,
+        "5": 4,
+        "22": 5,
+        "19": 4,
+        "11": 2,
+        "26": 6,
+        "30": 1,
+        "14": 4,
+        "10": 4,
+        "8": 2,
+        "27": 2,
+        "3": 1,
+        "20": 1,
+        "18": 1
+    },
+    "average_experience": 17.32,
+    "interest_distribution": {
+        "Innovation": 23,
+        "Problem solving": 30,
+        "Working with people": 25,
+        "Teaching": 25,
+        "Consulting": 27,
+        "Technology": 24,
+        "Mentoring": 20,
+        "Entrepreneurship": 20
+    },
+    "work_preference_distribution": {
+        "Freelance": 15,
+        "Hybrid": 17,
+        "Flexible work": 14,
+        "Remote": 12,
+        "Part-time": 14,
+        "Consulting": 14,
+        "Full-time": 14
+    },
+    "top_10_skills": [
+        [
+            "SQL",
+            16
+        ],
+        [
+            "Docker",
+            14
+        ],
+        [
+            "Python",
+            12
+        ],
+        [
+            "AWS",
+            12
+        ],
+        [
+            "Sewing",
+            11
+        ],
+        [
+            "Content Marketing",
+            10
+        ],
+        [
+            "Analytics",
+            10
+        ],
+        [
+            "Tailoring",
+            10
+        ],
+        [
+            "Alterations",
+            10
+        ],
+        [
+            "Embroidery",
+            10
+        ]
+    ],
+    "top_10_locations": [
+        [
+            "Kolkata",
+            12
+        ],
+        [
+            "Bangalore",
+            11
+        ],
+        [
+            "Delhi",
+            11
+        ],
+        [
+            "Kochi",
+            10
+        ],
+        [
+            "Coimbatore",
+            10
+        ],
+        [
+            "Trichy",
+            8
+        ],
+        [
+            "Mumbai",
+            8
+        ],
+        [
+            "Hyderabad",
+            7
+        ],
+        [
+            "Chennai",
+            7
+        ],
+        [
+            "Pune",
+            6
+        ]
+    ],
+    "advisor_type": "rule_based_matching_with_llm_generation",
+    "llm": "qwen/qwen3-vl-8b"
+}

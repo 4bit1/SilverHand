@@ -1,0 +1,3 @@
+"""
+ElderSkill AI Advisor module.
+"""
