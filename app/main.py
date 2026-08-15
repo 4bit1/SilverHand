@@ -15,6 +15,7 @@ from dotenv import load_dotenv
 
 from app.utils.audio_processor import decode_audio
 from app.asr.sarvam_asr import SarvamASR
+from app.api.routes.matching import router as matching_router
 
 load_dotenv()
 
@@ -30,6 +31,8 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+app.include_router(matching_router)
 
 sarvam_asr = None
 whisper_model = None
