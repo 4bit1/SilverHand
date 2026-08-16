@@ -29,7 +29,7 @@ export async function fetchSession(meetingId: string): Promise<MeetingSession | 
  * simply joins the record that already exists.
  */
 export async function openSession(booking: Booking): Promise<MeetingSession> {
-  const existing = await fetchSession(booking.meetingId);
+  const existing = await fetchSession(booking.id);
   if (existing) return existing;
 
   const start = bookingStart(booking);
@@ -40,7 +40,7 @@ export async function openSession(booking: Booking): Promise<MeetingSession> {
   const { data, error } = await supabase
     .from("meeting_sessions")
     .insert({
-      id: booking.meetingId,
+      id: booking.id,
       purpose: booking.purpose,
       host_name: booking.sellerName,
       guest_name: booking.buyerName,
@@ -53,7 +53,7 @@ export async function openSession(booking: Booking): Promise<MeetingSession> {
 
   if (error) {
     // Someone else created it in the same moment — read theirs.
-    const raced = await fetchSession(booking.meetingId);
+    const raced = await fetchSession(booking.id);
     if (raced) return raced;
     throw error;
   }
