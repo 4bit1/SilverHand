@@ -11,6 +11,8 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as TeachAndShareRouteImport } from './routes/teach-and-share'
+import { Route as TheirExpertiseRouteImport } from './routes/their-expertise'
+import { Route as MeetingBookingIdRouteImport } from './routes/meeting.$bookingId'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -22,31 +24,55 @@ const TeachAndShareRoute = TeachAndShareRouteImport.update({
   path: '/teach-and-share',
   getParentRoute: () => rootRouteImport,
 } as any)
+const TheirExpertiseRoute = TheirExpertiseRouteImport.update({
+  id: '/their-expertise',
+  path: '/their-expertise',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MeetingBookingIdRoute = MeetingBookingIdRouteImport.update({
+  id: '/meeting/$bookingId',
+  path: '/meeting/$bookingId',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/teach-and-share': typeof TeachAndShareRoute
+  '/their-expertise': typeof TheirExpertiseRoute
+  '/meeting/$bookingId': typeof MeetingBookingIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/teach-and-share': typeof TeachAndShareRoute
+  '/their-expertise': typeof TheirExpertiseRoute
+  '/meeting/$bookingId': typeof MeetingBookingIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/teach-and-share': typeof TeachAndShareRoute
+  '/their-expertise': typeof TheirExpertiseRoute
+  '/meeting/$bookingId': typeof MeetingBookingIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/teach-and-share'
+  fullPaths:
+    '/' | '/teach-and-share' | '/their-expertise' | '/meeting/$bookingId'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/teach-and-share'
-  id: '__root__' | '/' | '/teach-and-share'
+  to: '/' | '/teach-and-share' | '/their-expertise' | '/meeting/$bookingId'
+  id:
+    | '__root__'
+    | '/'
+    | '/teach-and-share'
+    | '/their-expertise'
+    | '/meeting/$bookingId'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   TeachAndShareRoute: typeof TeachAndShareRoute
+  TheirExpertiseRoute: typeof TheirExpertiseRoute
+  MeetingBookingIdRoute: typeof MeetingBookingIdRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -65,12 +91,28 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof TeachAndShareRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/their-expertise': {
+      id: '/their-expertise'
+      path: '/their-expertise'
+      fullPath: '/their-expertise'
+      preLoaderRoute: typeof TheirExpertiseRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/meeting/$bookingId': {
+      id: '/meeting/$bookingId'
+      path: '/meeting/$bookingId'
+      fullPath: '/meeting/$bookingId'
+      preLoaderRoute: typeof MeetingBookingIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   TeachAndShareRoute: TeachAndShareRoute,
+  TheirExpertiseRoute: TheirExpertiseRoute,
+  MeetingBookingIdRoute: MeetingBookingIdRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
