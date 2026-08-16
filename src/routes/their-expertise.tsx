@@ -1,4 +1,4 @@
-import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import { useMemo, useState } from "react";
 import { BadgeCheck, MapPin, Search, Star } from "lucide-react";
@@ -46,7 +46,6 @@ function money(cents: number) {
 
 function TheirExpertise() {
   const db = useDB();
-  const navigate = useNavigate();
 
   const [draft, setDraft] = useState("");
   const [query, setQuery] = useState("");
@@ -225,7 +224,6 @@ function TheirExpertise() {
               <ExpertCard
                 expert={expert}
                 label={query && score > 0 ? (i === 0 ? "Best match" : i < 3 ? "Recommended for your need" : null) : null}
-                onOpen={() => navigate({ to: "/expert/$expertId", params: { expertId: expert.id } })}
               />
             </li>
           ))}
@@ -277,11 +275,9 @@ function FilterSelect({
 function ExpertCard({
   expert,
   label,
-  onOpen,
 }: {
   expert: Expert;
   label: string | null;
-  onOpen: () => void;
 }) {
   return (
     <article className="flex h-full flex-col rounded-2xl border border-border bg-card p-6 shadow-sm transition-shadow hover:shadow-md">
@@ -327,7 +323,7 @@ function ExpertCard({
         </p>
       )}
 
-      <Button className="mt-5 h-12 w-full text-base" onClick={onOpen} asChild>
+      <Button className="mt-5 h-12 w-full text-base" asChild>
         <Link to="/expert/$expertId" params={{ expertId: expert.id }}>
           View profile
         </Link>
