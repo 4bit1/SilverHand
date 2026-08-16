@@ -1,0 +1,1 @@
+function e(){return`http://localhost:8000`}async function t(t){try{let n=await fetch(`${e()}/api/auth/users/${t}`);return n.ok?(await n.json())?.data??null:null}catch(e){return console.error(`ElderSkill profile fetch failed:`,e),null}}export{t};

@@ -1,0 +1,1 @@
+import{t as e}from"./jsx-runtime-B-hcVAMW.js";import{t}from"./AppShell-xygxTfir.js";var n=e(),r=[{label:`Home`,to:`/buyer`},{label:`Explore Services`,to:`/buyer/services`},{label:`Explore Products`,to:`/buyer/products`},{label:`Profile`,to:`/buyer/profile`}],i=()=>(0,n.jsx)(t,{nav:r,mode:`Buyer`});export{i as component};
