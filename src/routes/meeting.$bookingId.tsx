@@ -66,7 +66,6 @@ function Meeting() {
 
   const booking = db.bookings.find((b) => b.id === bookingId);
   const [access, setAccess] = useState<Access>({ kind: "loading" });
-  const resolvedFor = useRef<string | null>(null);
 
   /* Resolve the shared meeting record for this link. */
   useEffect(() => {
@@ -97,7 +96,7 @@ function Meeting() {
     return () => {
       cancelled = true;
     };
-  }, [bookingId, booking]);
+  }, [bookingId, booking?.id]);
 
   const session = access.kind === "ok" ? access.session : null;
   const role = access.kind === "ok" ? access.role : null;
