@@ -128,13 +128,42 @@ function RootShell({ children }: { children: ReactNode }) {
   );
 }
 
+function SiteHeader() {
+  const linkClass =
+    "rounded-md px-3 py-2 text-base font-medium text-foreground/80 transition-colors hover:bg-secondary hover:text-foreground";
+  return (
+    <header className="border-b border-border bg-background">
+      <nav
+        aria-label="Main"
+        className="mx-auto flex max-w-6xl flex-wrap items-center gap-x-2 gap-y-1 px-4 py-3 sm:px-6"
+      >
+        <Link to="/" className="mr-auto font-serif text-xl font-semibold text-primary">
+          ElderSkill
+        </Link>
+        <Link to="/teach-and-share" className={linkClass} activeProps={{ className: "bg-secondary text-foreground" }}>
+          Teach &amp; Share
+        </Link>
+        <Link to="/their-expertise" className={linkClass} activeProps={{ className: "bg-secondary text-foreground" }}>
+          Their Expertise
+        </Link>
+      </nav>
+    </header>
+  );
+}
+
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
 
   return (
     <QueryClientProvider client={queryClient}>
-      {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
-      <Outlet />
+      <div className="flex min-h-screen flex-col bg-background">
+        <SiteHeader />
+        {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
+        <main className="flex-1">
+          <Outlet />
+        </main>
+      </div>
     </QueryClientProvider>
   );
 }
+
