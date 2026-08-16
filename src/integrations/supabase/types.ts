@@ -14,6 +14,75 @@ export type Database = {
   }
   public: {
     Tables: {
+      experts: {
+        Row: {
+          age: number | null
+          availability_note: string
+          bio: string
+          city: string
+          created_at: string
+          experience_note: string
+          experience_years: number
+          id: string
+          initials: string
+          languages: string[]
+          name: string
+          price_cents: number
+          primary_skill: string
+          rating: number | null
+          reviews_count: number
+          services: Json
+          skills: string[]
+          tutorials: Json
+          updated_at: string
+          verified: boolean
+        }
+        Insert: {
+          age?: number | null
+          availability_note?: string
+          bio?: string
+          city: string
+          created_at?: string
+          experience_note?: string
+          experience_years?: number
+          id: string
+          initials: string
+          languages?: string[]
+          name: string
+          price_cents?: number
+          primary_skill: string
+          rating?: number | null
+          reviews_count?: number
+          services?: Json
+          skills?: string[]
+          tutorials?: Json
+          updated_at?: string
+          verified?: boolean
+        }
+        Update: {
+          age?: number | null
+          availability_note?: string
+          bio?: string
+          city?: string
+          created_at?: string
+          experience_note?: string
+          experience_years?: number
+          id?: string
+          initials?: string
+          languages?: string[]
+          name?: string
+          price_cents?: number
+          primary_skill?: string
+          rating?: number | null
+          reviews_count?: number
+          services?: Json
+          skills?: string[]
+          tutorials?: Json
+          updated_at?: string
+          verified?: boolean
+        }
+        Relationships: []
+      }
       meeting_sessions: {
         Row: {
           created_at: string
