@@ -1,6 +1,9 @@
-import { supabase } from "@/integrations/supabase/client";
-
 import { bookingEnd, bookingStart, type Booking } from "./store";
+import {
+  endMeetingSession,
+  getMeetingSession,
+  openMeetingSession,
+} from "./meetingSession.functions";
 
 export interface MeetingSession {
   id: string;
@@ -13,15 +16,10 @@ export interface MeetingSession {
   ended_at: string | null;
 }
 
-/** Read the shared session record for a meeting link. */
+/** Read the shared session record for a meeting link (server-side, link-scoped). */
 export async function fetchSession(meetingId: string): Promise<MeetingSession | null> {
-  const { data, error } = await supabase
-    .from("meeting_sessions")
-    .select("id, purpose, host_name, guest_name, started_at, ends_at, status, ended_at")
-    .eq("id", meetingId)
-    .maybeSingle();
-  if (error) throw error;
-  return data as MeetingSession | null;
+  const data = await getMeetingSession({ data: { meetingId } });
+  return (data as MeetingSession | null) ?? null;
 }
 
 /**
@@ -29,40 +27,23 @@ export async function fetchSession(meetingId: string): Promise<MeetingSession | 
  * simply joins the record that already exists.
  */
 export async function openSession(booking: Booking): Promise<MeetingSession> {
-  const existing = await fetchSession(booking.id);
-  if (existing) return existing;
-
   const start = bookingStart(booking);
   const end = bookingEnd(booking);
-  const now = Date.now();
-  const startedAt = new Date(Math.max(start.getTime(), now)).toISOString();
+  const startedAt = new Date(Math.max(start.getTime(), Date.now())).toISOString();
 
-  const { data, error } = await supabase
-    .from("meeting_sessions")
-    .insert({
-      id: booking.id,
-      purpose: booking.purpose,
-      host_name: booking.sellerName,
-      guest_name: booking.buyerName,
-      started_at: startedAt,
-      ends_at: end.toISOString(),
-      status: "ACTIVE",
-    })
-    .select("id, purpose, host_name, guest_name, started_at, ends_at, status, ended_at")
-    .single();
-
-  if (error) {
-    // Someone else created it in the same moment — read theirs.
-    const raced = await fetchSession(booking.id);
-    if (raced) return raced;
-    throw error;
-  }
+  const data = await openMeetingSession({
+    data: {
+      meetingId: booking.id,
+      purpose: booking.purpose ?? "",
+      hostName: booking.sellerName,
+      guestName: booking.buyerName,
+      startedAt,
+      endsAt: end.toISOString(),
+    },
+  });
   return data as MeetingSession;
 }
 
 export async function endSession(meetingId: string) {
-  await supabase
-    .from("meeting_sessions")
-    .update({ status: "COMPLETED", ended_at: new Date().toISOString() })
-    .eq("id", meetingId);
+  await endMeetingSession({ data: { meetingId } });
 }
