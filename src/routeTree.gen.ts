@@ -10,33 +10,43 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as TeachAndShareRouteImport } from './routes/teach-and-share'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const TeachAndShareRoute = TeachAndShareRouteImport.update({
+  id: '/teach-and-share',
+  path: '/teach-and-share',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/teach-and-share': typeof TeachAndShareRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/teach-and-share': typeof TeachAndShareRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/teach-and-share': typeof TeachAndShareRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths: '/' | '/teach-and-share'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to: '/' | '/teach-and-share'
+  id: '__root__' | '/' | '/teach-and-share'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  TeachAndShareRoute: typeof TeachAndShareRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +58,19 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/teach-and-share': {
+      id: '/teach-and-share'
+      path: '/teach-and-share'
+      fullPath: '/teach-and-share'
+      preLoaderRoute: typeof TeachAndShareRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  TeachAndShareRoute: TeachAndShareRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
