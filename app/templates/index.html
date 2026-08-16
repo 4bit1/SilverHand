@@ -267,6 +267,40 @@
                     console.log('Summary value:', data.summary);
                     console.log('Summary section exists:', !!summarySection);
                 }
+
+                // If user came from Silver Hands, redirect back with profile data
+                const returnTo = localStorage.getItem('elderskill_return_to');
+                const userId = localStorage.getItem('elderskill_user_id');
+                if (returnTo && userId) {
+                    const separator = returnTo.includes('?') ? '&' : '?';
+                    const returnUrl = returnTo + separator + 'elderskill_user_id=' + encodeURIComponent(userId);
+                    
+                    // Show return button
+                    const returnDiv = document.createElement('div');
+                    returnDiv.style.cssText = 'text-align:center; margin-top:24px;';
+                    returnDiv.innerHTML = '<a href="' + returnUrl + '" style="display:inline-block;padding:14px 28px;background:#47531F;color:white;border-radius:8px;text-decoration:none;font-weight:600;font-size:15px;">Return to SilverHands →</a>' +
+                        '<p style="margin-top:10px;font-size:13px;color:#6B6B6B;" id="returnCountdown">Returning automatically in 5 seconds...</p>';
+                    
+                    if (summarySection) {
+                        summarySection.appendChild(returnDiv);
+                    } else {
+                        document.querySelector('.main').appendChild(returnDiv);
+                    }
+
+                    // Auto-redirect after 5 seconds
+                    let countdown = 5;
+                    const countdownEl = document.getElementById('returnCountdown');
+                    const interval = setInterval(() => {
+                        countdown--;
+                        if (countdownEl) countdownEl.textContent = 'Returning automatically in ' + countdown + ' seconds...';
+                        if (countdown <= 0) {
+                            clearInterval(interval);
+                            localStorage.removeItem('elderskill_return_to');
+                            window.location.href = returnUrl;
+                        }
+                    }, 1000);
+                }
+
                 return;
             }
             

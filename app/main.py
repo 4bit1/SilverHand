@@ -354,9 +354,10 @@ async def generate_ai_summary(transcript_data, profile):
     for item in transcript_data:
         conversation += f"Q: {item['question']}\nA: {item['answer']}\n"
     
-    prompt = f"""You are an expert career profile writer for ElderSkill, a platform connecting experienced professionals with employers.
+    prompt = f"""You are an expert professional profile writer for ElderSkill.
 
-Based on the following voice interview transcript, write a DETAILED, DESCRIPTIVE, and ENGAGING professional profile summary.
+Based on the voice interview transcript, create a concise, highly professional
+profile summary that uniquely describes the person's work, expertise, and value.
 
 INTERVIEW TRANSCRIPT:
 {conversation}
@@ -366,28 +367,27 @@ EXTRACTED DATA:
 - Experience: {profile.get('experience_years', 'Not specified')} years
 - Location: {profile.get('location', 'Not specified')}
 
-WRITING GUIDELINES:
-1. Write 200-300 words (4-6 paragraphs)
-2. First paragraph: Introduce who they are professionally
-3. Second paragraph: Detail their technical skills and expertise
-4. Third paragraph: Describe their experience and achievements
-5. Fourth paragraph: Highlight their passion, values, and what makes them unique
-6. Final paragraph: Summarize their professional value proposition
+WRITING REQUIREMENTS:
+1. Write ONLY 4-5 lines.
+2. Use sophisticated, professional vocabulary.
+3. Describe their work uniquely rather than simply listing skills.
+4. Emphasize their practical expertise, experience, and professional value.
+5. Make the profile sound distinctive and credible.
+6. Use specific details from their answers whenever available.
+7. Include relevant employer-searchable keywords naturally.
+8. Avoid generic phrases such as "hardworking", "passionate", "dedicated",
+   "highly motivated", or "team player" unless the interview specifically supports them.
+9. Do NOT invent achievements, experience, skills, or qualifications.
+10. Do NOT use headings, bullet points, numbering, or labels.
+11. Return one polished professional paragraph of approximately 60-90 words.
 
-IMPORTANT:
-- Use specific details from their answers
-- Include employer-searchable keywords
-- Write in a warm, human tone
-- Do NOT use generic phrases
-- Do NOT invent information
-- Make it sound like a professional recruiter wrote it
-- Be descriptive and thorough
-
-Return the COMPLETE summary. Do not abbreviate or shorten."""
+The final result should read like a premium professional profile written by an
+experienced recruiter, clearly communicating what this person does and what
+makes their expertise valuable."""
 
     try:
         # Use LONGER timeout (120 seconds) for detailed response
-        async with httpx.AsyncClient(timeout=120) as client:
+        async with httpx.AsyncClient(timeout=600) as client:
             r = await client.post(
                 f"{LLM_BASE_URL}/chat/completions",
                 headers={"Content-Type": "application/json"},

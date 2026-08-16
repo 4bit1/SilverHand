@@ -59,6 +59,20 @@
         function showAlert(msg, type) { const a = document.getElementById('alert'); a.textContent = msg; a.className = 'alert alert-' + type; a.style.display = 'block'; }
         function hideAlert() { document.getElementById('alert').style.display = 'none'; }
         
+        const params = new URLSearchParams(window.location.search);
+        const returnTo = params.get('return_to');
+
+        // Persist return_to so the voice interview page can redirect back after completion
+        if (returnTo) {
+            localStorage.setItem('elderskill_return_to', returnTo);
+        }
+
+        function afterAuthRedirect(userId) {
+            // Always go to ElderSkill's own voice interview page first.
+            // The voice interview page will redirect to return_to after completion.
+            setTimeout(function() { window.location.href = '/'; }, 1500);
+        }
+
         async function handleSignup() {
             hideAlert();
             const name = document.getElementById('signupName').value.trim();
@@ -84,7 +98,7 @@
                 if (result.success) {
                     localStorage.setItem('elderskill_user_id', result.data.user.id);
                     showAlert('✅ Account created! Starting interview...', 'success');
-                    setTimeout(() => window.location.href = '/', 1500);
+                    afterAuthRedirect(result.data.user.id);
                 }
             } catch(e) { showAlert('Network error', 'error'); }
         }
@@ -108,7 +122,7 @@
                 if (result.success) {
                     localStorage.setItem('elderskill_user_id', result.data.user.id);
                     showAlert('✅ Sign in successful!', 'success');
-                    setTimeout(() => window.location.href = '/dashboard', 1500);
+                    afterAuthRedirect(result.data.user.id);
                 }
             } catch(e) { showAlert('Network error', 'error'); }
         }

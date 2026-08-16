@@ -31,6 +31,8 @@
         <a href="/dashboard" class="brand">ElderSkill</a>
         <nav class="nav">
             <a href="/dashboard">Dashboard</a>
+            <a href="/" style="color:var(--accent);font-weight:600;">🎤 New Interview</a>
+            <span id="returnToSH"></span>
             <button class="logout" onclick="logout()">Logout</button>
         </nav>
     </header>
@@ -97,6 +99,18 @@
         }
         
         loadDashboard();
+
+        // Show "Return to SilverHands" if user came from Silver Hands
+        (function() {
+            const returnTo = localStorage.getItem('elderskill_return_to');
+            const userId = localStorage.getItem('elderskill_user_id');
+            const el = document.getElementById('returnToSH');
+            if (returnTo && userId && el) {
+                const sep = returnTo.includes('?') ? '&' : '?';
+                const url = returnTo + sep + 'elderskill_user_id=' + encodeURIComponent(userId);
+                el.innerHTML = '<a href="' + url + '" style="background:var(--accent);color:white;padding:8px 16px;border-radius:8px;text-decoration:none;font-size:14px;font-weight:600;">Return to SilverHands →</a>';
+            }
+        })();
     </script>
 </body>
 </html>
