@@ -71,8 +71,7 @@ function Meeting() {
   /* Resolve the shared meeting record for this link. */
   useEffect(() => {
     let cancelled = false;
-    if (resolvedFor.current === bookingId) return;
-    resolvedFor.current = bookingId;
+
 
     (async () => {
       try {
