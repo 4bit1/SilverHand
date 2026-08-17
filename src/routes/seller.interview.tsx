@@ -9,7 +9,7 @@ import { createFileRoute } from "@tanstack/react-router";
  * auth page so they can go through the real voice application.
  */
 export const Route = createFileRoute("/seller/interview")({
-  head: () => ({ meta: [{ title: "Redirecting to ElderSkill..." }] }),
+  head: () => ({ meta: [{ title: "Redirecting to SilverHands..." }] }),
   component: SellerInterviewRedirect,
 });
 
@@ -22,7 +22,7 @@ function SellerInterviewRedirect() {
 
   return (
     <div className="flex min-h-[60vh] items-center justify-center">
-      <p className="text-muted-foreground">Redirecting to ElderSkill voice application…</p>
+      <p className="text-muted-foreground">Redirecting to SilverHands voice application…</p>
     </div>
   );
 }

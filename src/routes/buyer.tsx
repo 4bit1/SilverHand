@@ -6,6 +6,7 @@ const nav: NavItem[] = [
   { label: "Home", to: "/buyer" },
   { label: "Explore Services", to: "/buyer/services" },
   { label: "Explore Products", to: "/buyer/products" },
+  { label: "Their Expertise", to: "/buyer/their-expertise" },
   { label: "Profile", to: "/buyer/profile" },
 ];
 

@@ -19,7 +19,8 @@ export function AppShell({ nav, mode }: { nav: NavItem[]; mode: "Buyer" | "Selle
 
   function submitSearch(e: React.FormEvent) {
     e.preventDefault();
-    navigate({ to: "/buyer/services", search: query.trim() ? { q: query.trim() } : {} });
+    const to = mode === "Seller" ? "/seller/products" : "/buyer/services";
+    navigate({ to, search: query.trim() ? { q: query.trim() } : {} });
   }
 
   return (
@@ -40,24 +41,22 @@ export function AppShell({ nav, mode }: { nav: NavItem[]; mode: "Buyer" | "Selle
             </span>
           </Link>
 
-          {mode === "Buyer" && (
-            <form onSubmit={submitSearch} className="relative hidden flex-1 max-w-xs md:block">
-              <label htmlFor="shell-search" className="sr-only">
-                Search services and products
-              </label>
-              <Search
-                className="pointer-events-none absolute left-4 top-1/2 size-4 -translate-y-1/2 text-muted-foreground"
-                aria-hidden
-              />
-              <input
-                id="shell-search"
-                value={query}
-                onChange={(e) => setQuery(e.target.value)}
-                placeholder="Search SilverHands"
-                className="h-10 w-full rounded-full border border-border bg-card pl-10 pr-4 text-sm outline-none placeholder:text-muted-foreground"
-              />
-            </form>
-          )}
+          <form onSubmit={submitSearch} className="relative hidden flex-1 max-w-xs md:block">
+            <label htmlFor="shell-search" className="sr-only">
+              Search services and products
+            </label>
+            <Search
+              className="pointer-events-none absolute left-4 top-1/2 size-4 -translate-y-1/2 text-muted-foreground"
+              aria-hidden
+            />
+            <input
+              id="shell-search"
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+              placeholder="Search SilverHands"
+              className="h-10 w-full rounded-full border border-border bg-card pl-10 pr-4 text-sm outline-none placeholder:text-muted-foreground"
+            />
+          </form>
 
           <nav aria-label="Primary" className="ml-auto hidden items-center gap-0.5 lg:flex">
             {nav.map((item) => (
@@ -163,24 +162,22 @@ export function AppShell({ nav, mode }: { nav: NavItem[]; mode: "Buyer" | "Selle
           )}
         >
           <div className="mx-auto flex max-w-7xl flex-col gap-1 px-5 py-3">
-            {mode === "Buyer" && (
-              <form onSubmit={submitSearch} className="relative mb-2 md:hidden">
-                <label htmlFor="shell-search-mobile" className="sr-only">
-                  Search services and products
-                </label>
-                <Search
-                  className="pointer-events-none absolute left-4 top-1/2 size-4 -translate-y-1/2 text-muted-foreground"
-                  aria-hidden
-                />
-                <input
-                  id="shell-search-mobile"
-                  value={query}
-                  onChange={(e) => setQuery(e.target.value)}
-                  placeholder="Search SilverHands"
-                  className="h-11 w-full rounded-full border border-border bg-card pl-10 pr-4 text-sm outline-none placeholder:text-muted-foreground"
-                />
-              </form>
-            )}
+            <form onSubmit={submitSearch} className="relative mb-2 md:hidden">
+              <label htmlFor="shell-search-mobile" className="sr-only">
+                Search services and products
+              </label>
+              <Search
+                className="pointer-events-none absolute left-4 top-1/2 size-4 -translate-y-1/2 text-muted-foreground"
+                aria-hidden
+              />
+              <input
+                id="shell-search-mobile"
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
+                placeholder="Search SilverHands"
+                className="h-11 w-full rounded-full border border-border bg-card pl-10 pr-4 text-sm outline-none placeholder:text-muted-foreground"
+              />
+            </form>
             {nav.map((item) => (
               <Link
                 key={item.to}

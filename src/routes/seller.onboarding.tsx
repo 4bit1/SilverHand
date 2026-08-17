@@ -84,7 +84,7 @@ function SellerOnboarding() {
               href={`${(import.meta as any).env?.VITE_VOICE_API || "http://localhost:8000"}/auth?return_to=${encodeURIComponent(window.location.origin + "/elder/callback")}`}
               className="font-semibold text-primary underline underline-offset-4"
             >
-              ElderSkill voice interview
+              SilverHands voice interview
             </a>{" "}
             to have AI write your profile for you.
           </p>

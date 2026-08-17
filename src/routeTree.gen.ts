@@ -21,7 +21,9 @@ import { Route as BuyerMessagesRouteImport } from './routes/buyer.messages'
 import { Route as BuyerProductsRouteImport } from './routes/buyer.products'
 import { Route as BuyerProfileRouteImport } from './routes/buyer.profile'
 import { Route as BuyerServicesRouteImport } from './routes/buyer.services'
+import { Route as BuyerTheirExpertiseRouteImport } from './routes/buyer.their-expertise'
 import { Route as ElderCallbackRouteImport } from './routes/elder.callback'
+import { Route as MeetingBookingIdRouteImport } from './routes/meeting.$bookingId'
 import { Route as SellerIndexRouteImport } from './routes/seller.index'
 import { Route as SellerAiAdvisorRouteImport } from './routes/seller.ai-advisor'
 import { Route as SellerAnalyticsRouteImport } from './routes/seller.analytics'
@@ -32,6 +34,8 @@ import { Route as SellerOrdersRouteImport } from './routes/seller.orders'
 import { Route as SellerProductsRouteImport } from './routes/seller.products'
 import { Route as SellerProfileRouteImport } from './routes/seller.profile'
 import { Route as SellerServicesRouteImport } from './routes/seller.services'
+import { Route as SellerTeachAndShareRouteImport } from './routes/seller.teach-and-share'
+import { Route as BuyerExpertExpertIdRouteImport } from './routes/buyer.expert.$expertId'
 import { Route as BuyerProductIdRouteImport } from './routes/buyer.product.$id'
 import { Route as BuyerServiceIdRouteImport } from './routes/buyer.service.$id'
 
@@ -95,9 +99,19 @@ const BuyerServicesRoute = BuyerServicesRouteImport.update({
   path: '/services',
   getParentRoute: () => BuyerRoute,
 } as any)
+const BuyerTheirExpertiseRoute = BuyerTheirExpertiseRouteImport.update({
+  id: '/their-expertise',
+  path: '/their-expertise',
+  getParentRoute: () => BuyerRoute,
+} as any)
 const ElderCallbackRoute = ElderCallbackRouteImport.update({
   id: '/elder/callback',
   path: '/elder/callback',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MeetingBookingIdRoute = MeetingBookingIdRouteImport.update({
+  id: '/meeting/$bookingId',
+  path: '/meeting/$bookingId',
   getParentRoute: () => rootRouteImport,
 } as any)
 const SellerIndexRoute = SellerIndexRouteImport.update({
@@ -150,6 +164,16 @@ const SellerServicesRoute = SellerServicesRouteImport.update({
   path: '/services',
   getParentRoute: () => SellerRoute,
 } as any)
+const SellerTeachAndShareRoute = SellerTeachAndShareRouteImport.update({
+  id: '/teach-and-share',
+  path: '/teach-and-share',
+  getParentRoute: () => SellerRoute,
+} as any)
+const BuyerExpertExpertIdRoute = BuyerExpertExpertIdRouteImport.update({
+  id: '/expert/$expertId',
+  path: '/expert/$expertId',
+  getParentRoute: () => BuyerRoute,
+} as any)
 const BuyerProductIdRoute = BuyerProductIdRouteImport.update({
   id: '/product/$id',
   path: '/product/$id',
@@ -173,7 +197,9 @@ export interface FileRoutesByFullPath {
   '/buyer/products': typeof BuyerProductsRoute
   '/buyer/profile': typeof BuyerProfileRoute
   '/buyer/services': typeof BuyerServicesRoute
+  '/buyer/their-expertise': typeof BuyerTheirExpertiseRoute
   '/elder/callback': typeof ElderCallbackRoute
+  '/meeting/$bookingId': typeof MeetingBookingIdRoute
   '/seller/ai-advisor': typeof SellerAiAdvisorRoute
   '/seller/analytics': typeof SellerAnalyticsRoute
   '/seller/interview': typeof SellerInterviewRoute
@@ -183,8 +209,10 @@ export interface FileRoutesByFullPath {
   '/seller/products': typeof SellerProductsRoute
   '/seller/profile': typeof SellerProfileRoute
   '/seller/services': typeof SellerServicesRoute
+  '/seller/teach-and-share': typeof SellerTeachAndShareRoute
   '/buyer/': typeof BuyerIndexRoute
   '/seller/': typeof SellerIndexRoute
+  '/buyer/expert/$expertId': typeof BuyerExpertExpertIdRoute
   '/buyer/product/$id': typeof BuyerProductIdRoute
   '/buyer/service/$id': typeof BuyerServiceIdRoute
 }
@@ -198,7 +226,9 @@ export interface FileRoutesByTo {
   '/buyer/products': typeof BuyerProductsRoute
   '/buyer/profile': typeof BuyerProfileRoute
   '/buyer/services': typeof BuyerServicesRoute
+  '/buyer/their-expertise': typeof BuyerTheirExpertiseRoute
   '/elder/callback': typeof ElderCallbackRoute
+  '/meeting/$bookingId': typeof MeetingBookingIdRoute
   '/seller/ai-advisor': typeof SellerAiAdvisorRoute
   '/seller/analytics': typeof SellerAnalyticsRoute
   '/seller/interview': typeof SellerInterviewRoute
@@ -208,8 +238,10 @@ export interface FileRoutesByTo {
   '/seller/products': typeof SellerProductsRoute
   '/seller/profile': typeof SellerProfileRoute
   '/seller/services': typeof SellerServicesRoute
+  '/seller/teach-and-share': typeof SellerTeachAndShareRoute
   '/buyer': typeof BuyerIndexRoute
   '/seller': typeof SellerIndexRoute
+  '/buyer/expert/$expertId': typeof BuyerExpertExpertIdRoute
   '/buyer/product/$id': typeof BuyerProductIdRoute
   '/buyer/service/$id': typeof BuyerServiceIdRoute
 }
@@ -226,7 +258,9 @@ export interface FileRoutesById {
   '/buyer/products': typeof BuyerProductsRoute
   '/buyer/profile': typeof BuyerProfileRoute
   '/buyer/services': typeof BuyerServicesRoute
+  '/buyer/their-expertise': typeof BuyerTheirExpertiseRoute
   '/elder/callback': typeof ElderCallbackRoute
+  '/meeting/$bookingId': typeof MeetingBookingIdRoute
   '/seller/ai-advisor': typeof SellerAiAdvisorRoute
   '/seller/analytics': typeof SellerAnalyticsRoute
   '/seller/interview': typeof SellerInterviewRoute
@@ -236,8 +270,10 @@ export interface FileRoutesById {
   '/seller/products': typeof SellerProductsRoute
   '/seller/profile': typeof SellerProfileRoute
   '/seller/services': typeof SellerServicesRoute
+  '/seller/teach-and-share': typeof SellerTeachAndShareRoute
   '/buyer/': typeof BuyerIndexRoute
   '/seller/': typeof SellerIndexRoute
+  '/buyer/expert/$expertId': typeof BuyerExpertExpertIdRoute
   '/buyer/product/$id': typeof BuyerProductIdRoute
   '/buyer/service/$id': typeof BuyerServiceIdRoute
 }
@@ -255,7 +291,9 @@ export interface FileRouteTypes {
     | '/buyer/products'
     | '/buyer/profile'
     | '/buyer/services'
+    | '/buyer/their-expertise'
     | '/elder/callback'
+    | '/meeting/$bookingId'
     | '/seller/ai-advisor'
     | '/seller/analytics'
     | '/seller/interview'
@@ -265,8 +303,10 @@ export interface FileRouteTypes {
     | '/seller/products'
     | '/seller/profile'
     | '/seller/services'
+    | '/seller/teach-and-share'
     | '/buyer/'
     | '/seller/'
+    | '/buyer/expert/$expertId'
     | '/buyer/product/$id'
     | '/buyer/service/$id'
   fileRoutesByTo: FileRoutesByTo
@@ -280,7 +320,9 @@ export interface FileRouteTypes {
     | '/buyer/products'
     | '/buyer/profile'
     | '/buyer/services'
+    | '/buyer/their-expertise'
     | '/elder/callback'
+    | '/meeting/$bookingId'
     | '/seller/ai-advisor'
     | '/seller/analytics'
     | '/seller/interview'
@@ -290,8 +332,10 @@ export interface FileRouteTypes {
     | '/seller/products'
     | '/seller/profile'
     | '/seller/services'
+    | '/seller/teach-and-share'
     | '/buyer'
     | '/seller'
+    | '/buyer/expert/$expertId'
     | '/buyer/product/$id'
     | '/buyer/service/$id'
   id:
@@ -307,7 +351,9 @@ export interface FileRouteTypes {
     | '/buyer/products'
     | '/buyer/profile'
     | '/buyer/services'
+    | '/buyer/their-expertise'
     | '/elder/callback'
+    | '/meeting/$bookingId'
     | '/seller/ai-advisor'
     | '/seller/analytics'
     | '/seller/interview'
@@ -317,8 +363,10 @@ export interface FileRouteTypes {
     | '/seller/products'
     | '/seller/profile'
     | '/seller/services'
+    | '/seller/teach-and-share'
     | '/buyer/'
     | '/seller/'
+    | '/buyer/expert/$expertId'
     | '/buyer/product/$id'
     | '/buyer/service/$id'
   fileRoutesById: FileRoutesById
@@ -331,6 +379,7 @@ export interface RootRouteChildren {
   ApiAdvisorRoute: typeof ApiAdvisorRoute
   ApiAdvisorChatRoute: typeof ApiAdvisorChatRoute
   ElderCallbackRoute: typeof ElderCallbackRoute
+  MeetingBookingIdRoute: typeof MeetingBookingIdRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -419,11 +468,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof BuyerServicesRouteImport
       parentRoute: typeof BuyerRoute
     }
+    '/buyer/their-expertise': {
+      id: '/buyer/their-expertise'
+      path: '/their-expertise'
+      fullPath: '/buyer/their-expertise'
+      preLoaderRoute: typeof BuyerTheirExpertiseRouteImport
+      parentRoute: typeof BuyerRoute
+    }
     '/elder/callback': {
       id: '/elder/callback'
       path: '/elder/callback'
       fullPath: '/elder/callback'
       preLoaderRoute: typeof ElderCallbackRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/meeting/$bookingId': {
+      id: '/meeting/$bookingId'
+      path: '/meeting/$bookingId'
+      fullPath: '/meeting/$bookingId'
+      preLoaderRoute: typeof MeetingBookingIdRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/seller/': {
@@ -496,6 +559,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SellerServicesRouteImport
       parentRoute: typeof SellerRoute
     }
+    '/seller/teach-and-share': {
+      id: '/seller/teach-and-share'
+      path: '/teach-and-share'
+      fullPath: '/seller/teach-and-share'
+      preLoaderRoute: typeof SellerTeachAndShareRouteImport
+      parentRoute: typeof SellerRoute
+    }
+    '/buyer/expert/$expertId': {
+      id: '/buyer/expert/$expertId'
+      path: '/expert/$expertId'
+      fullPath: '/buyer/expert/$expertId'
+      preLoaderRoute: typeof BuyerExpertExpertIdRouteImport
+      parentRoute: typeof BuyerRoute
+    }
     '/buyer/product/$id': {
       id: '/buyer/product/$id'
       path: '/product/$id'
@@ -519,7 +596,9 @@ interface BuyerRouteChildren {
   BuyerProductsRoute: typeof BuyerProductsRoute
   BuyerProfileRoute: typeof BuyerProfileRoute
   BuyerServicesRoute: typeof BuyerServicesRoute
+  BuyerTheirExpertiseRoute: typeof BuyerTheirExpertiseRoute
   BuyerIndexRoute: typeof BuyerIndexRoute
+  BuyerExpertExpertIdRoute: typeof BuyerExpertExpertIdRoute
   BuyerProductIdRoute: typeof BuyerProductIdRoute
   BuyerServiceIdRoute: typeof BuyerServiceIdRoute
 }
@@ -530,7 +609,9 @@ const BuyerRouteChildren: BuyerRouteChildren = {
   BuyerProductsRoute: BuyerProductsRoute,
   BuyerProfileRoute: BuyerProfileRoute,
   BuyerServicesRoute: BuyerServicesRoute,
+  BuyerTheirExpertiseRoute: BuyerTheirExpertiseRoute,
   BuyerIndexRoute: BuyerIndexRoute,
+  BuyerExpertExpertIdRoute: BuyerExpertExpertIdRoute,
   BuyerProductIdRoute: BuyerProductIdRoute,
   BuyerServiceIdRoute: BuyerServiceIdRoute,
 }
@@ -547,6 +628,7 @@ interface SellerRouteChildren {
   SellerProductsRoute: typeof SellerProductsRoute
   SellerProfileRoute: typeof SellerProfileRoute
   SellerServicesRoute: typeof SellerServicesRoute
+  SellerTeachAndShareRoute: typeof SellerTeachAndShareRoute
   SellerIndexRoute: typeof SellerIndexRoute
 }
 
@@ -560,6 +642,7 @@ const SellerRouteChildren: SellerRouteChildren = {
   SellerProductsRoute: SellerProductsRoute,
   SellerProfileRoute: SellerProfileRoute,
   SellerServicesRoute: SellerServicesRoute,
+  SellerTeachAndShareRoute: SellerTeachAndShareRoute,
   SellerIndexRoute: SellerIndexRoute,
 }
 
@@ -574,6 +657,7 @@ const rootRouteChildren: RootRouteChildren = {
   ApiAdvisorRoute: ApiAdvisorRoute,
   ApiAdvisorChatRoute: ApiAdvisorChatRoute,
   ElderCallbackRoute: ElderCallbackRoute,
+  MeetingBookingIdRoute: MeetingBookingIdRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

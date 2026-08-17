@@ -112,7 +112,7 @@ function ElderCallback() {
     <div className="flex min-h-screen items-center justify-center bg-background">
       <div className="text-center space-y-3">
         <div className="mx-auto size-10 animate-spin rounded-full border-4 border-primary border-t-transparent" />
-        <p className="text-muted-foreground">Syncing your profile from ElderSkill…</p>
+        <p className="text-muted-foreground">Syncing your profile from SilverHands…</p>
       </div>
     </div>
   );

@@ -9,6 +9,7 @@ const nav: NavItem[] = [
   { label: "Orders", to: "/seller/orders" },
   { label: "Analytics", to: "/seller/analytics" },
   { label: "AI Advisor", to: "/seller/ai-advisor" },
+  { label: "Teach & Share", to: "/seller/teach-and-share" },
   { label: "Profile", to: "/seller/profile" },
 ];
 

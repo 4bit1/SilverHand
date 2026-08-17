@@ -58,7 +58,7 @@ function SellerProfile() {
   async function resyncFromElderSkill() {
     const userId = window.localStorage.getItem("silverhands.elderskill_user_id");
     if (!userId) {
-      toast.error("No ElderSkill account linked. Complete a voice interview first.");
+      toast.error("No SilverHands account linked. Complete a voice interview first.");
       return;
     }
     setSyncing(true);
@@ -80,13 +80,13 @@ function SellerProfile() {
           languages,
         };
         window.localStorage.setItem("silverhands.profile", JSON.stringify(p));
-        toast.success("Profile synced from ElderSkill!");
+        toast.success("Profile synced from SilverHands!");
       } else {
-        toast.error("Could not fetch profile from ElderSkill.");
+        toast.error("Could not fetch profile from SilverHands.");
       }
     } catch (e) {
       console.error(e);
-      toast.error("Sync failed — ElderSkill may not be running.");
+      toast.error("Sync failed — SilverHands may not be running.");
     } finally {
       setSyncing(false);
     }
@@ -104,7 +104,7 @@ function SellerProfile() {
               ✓
             </span>
             <div>
-              <p className="text-sm font-semibold">ElderSkill account linked</p>
+              <p className="text-sm font-semibold">SilverHands account linked</p>
               <p className="text-xs text-muted-foreground">
                 Profile data synced from your voice interview
               </p>
@@ -126,7 +126,7 @@ function SellerProfile() {
           <div>
             <p className="text-sm font-semibold">Want AI to write your profile?</p>
             <p className="text-xs text-muted-foreground">
-              Complete a voice interview on ElderSkill to auto-fill your profile.
+              Complete a voice interview on SilverHands to auto-fill your profile.
             </p>
           </div>
           <Button
