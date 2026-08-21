@@ -1,0 +1,59 @@
+# 1. Environment/secrets
+.env
+.env.*
+!.env.example
+
+# 2. Node dependencies
+node_modules/
+**/node_modules/
+
+# 3. Python environments
+venv/
+**/venv/
+.venv/
+**/.venv/
+.silverhand/
+**/.silverhand/
+
+# 4. Python generated files
+__pycache__/
+**/__pycache__/
+*.py[cod]
+
+# 5. Build/cache/output
+dist/
+**/dist/
+build/
+**/build/
+.output/
+**/.output/
+.wrangler/
+**/.wrangler/
+.tanstack/
+**/.tanstack/
+
+# 6. Runtime
+.run/
+logs/
+**/.run/
+**/logs/
+
+# 7. Supabase local state
+**/supabase/.temp/
+
+# 8. Local OS/editor files
+.DS_Store
+Thumbs.db
+.vscode/
+*.swp
+*.swo
+
+# 9. Local installers
+elderskill-voice-engine/Miniconda3-latest-Linux-x86_64.sh
+
+# 10. ML/model/cache files
+elderskill-voice-engine/models/
+elderskill-voice-engine/temp/
+elderskill-voice-engine/data/
+**/.cache/
+elderskill-voice-engine/Miniconda3-latest-Linux-x86_64.sh

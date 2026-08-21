@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>SilverHands - Sign In</title>
+    <style>
+        :root { --bg: #FAF8F5; --text: #2C2C2C; --accent: #7A8B5C; --border: #E5E0D8; --error: #B85C5C; --success: #5C8B5C; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: Georgia, serif; background: var(--bg); min-height: 100vh; display: flex; justify-content: center; align-items: center; padding: 20px; }
+        .container { background: white; border-radius: 16px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); max-width: 440px; width: 100%; padding: 40px; }
+        h1 { text-align: center; margin-bottom: 8px; font-size: 28px; }
+        .subtitle { text-align: center; color: #6B6B6B; margin-bottom: 30px; font-size: 14px; font-family: sans-serif; }
+        .form-group { margin-bottom: 16px; font-family: sans-serif; }
+        label { display: block; margin-bottom: 4px; font-size: 13px; font-weight: 500; }
+        input { width: 100%; padding: 12px; border: 1px solid var(--border); border-radius: 8px; font-size: 15px; }
+        .btn { width: 100%; padding: 14px; background: var(--text); color: white; border: none; border-radius: 8px; font-size: 15px; font-weight: 600; cursor: pointer; font-family: sans-serif; margin-top: 10px; }
+        .btn:hover { background: #1a1a1a; }
+        .alert { padding: 14px; border-radius: 8px; margin-bottom: 16px; display: none; font-size: 14px; font-family: sans-serif; }
+        .alert-error { background: #FDE8E8; color: var(--error); }
+        .alert-success { background: #E8F5E9; color: var(--success); }
+        .alert-warning { background: #FFF8E1; color: #F57F17; }
+        .toggle { text-align: center; margin-top: 16px; font-size: 14px; color: #6B6B6B; font-family: sans-serif; }
+        .toggle a { color: var(--accent); cursor: pointer; font-weight: 600; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>SilverHands</h1>
+        <p class="subtitle" id="subtitle">Sign in to continue your interview</p>
+        <div class="alert" id="alert"></div>
+        
+        <div id="loginForm">
+            <div class="form-group"><label>Email</label><input type="email" id="loginEmail" placeholder="your@email.com"></div>
+            <div class="form-group"><label>Password</label><input type="password" id="loginPassword" placeholder="Your password"></div>
+            <button class="btn" onclick="handleLogin()">Sign In</button>
+            <p class="toggle">New user? <a onclick="showSignup()">Create Account</a></p>
+        </div>
+        
+        <div id="signupForm" style="display:none">
+            <div class="form-group"><label>Full Name</label><input type="text" id="signupName" placeholder="Your name"></div>
+            <div class="form-group"><label>Email</label><input type="email" id="signupEmail" placeholder="your@email.com"></div>
+            <div class="form-group"><label>Password</label><input type="password" id="signupPassword" placeholder="Min 6 characters"></div>
+            <button class="btn" onclick="handleSignup()">Create Account</button>
+            <p class="toggle">Already have an account? <a onclick="showLogin()">Sign In</a></p>
+        </div>
+    </div>
+    <script>
+        function showSignup() {
+            document.getElementById('loginForm').style.display = 'none';
+            document.getElementById('signupForm').style.display = 'block';
+            document.getElementById('subtitle').textContent = 'Create your account';
+            hideAlert();
+        }
+        function showLogin() {
+            document.getElementById('loginForm').style.display = 'block';
+            document.getElementById('signupForm').style.display = 'none';
+            document.getElementById('subtitle').textContent = 'Sign in to continue your interview';
+            hideAlert();
+        }
+        function showAlert(msg, type) { const a = document.getElementById('alert'); a.textContent = msg; a.className = 'alert alert-' + type; a.style.display = 'block'; }
+        function hideAlert() { document.getElementById('alert').style.display = 'none'; }
+        
+        const params = new URLSearchParams(window.location.search);
+        const returnTo = params.get('return_to');
+
+        // Persist return_to so the voice interview page can redirect back after completion
+        if (returnTo) {
+            localStorage.setItem('elderskill_return_to', returnTo);
+        }
+
+        function afterAuthRedirect(userId) {
+            // Always go to ElderSkill's own voice interview page first.
+            // The voice interview page will redirect to return_to after completion.
+            setTimeout(function() { window.location.href = '/'; }, 1500);
+        }
+
+        async function handleSignup() {
+            hideAlert();
+            const name = document.getElementById('signupName').value.trim();
+            const email = document.getElementById('signupEmail').value.trim();
+            const password = document.getElementById('signupPassword').value;
+            
+            if (!email || !password) { showAlert('Please fill all fields', 'error'); return; }
+            if (password.length < 6) { showAlert('Password must be 6+ characters', 'error'); return; }
+            
+            try {
+                const res = await fetch('/api/auth/signup', {
+                    method: 'POST', headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({email, password, full_name: name || null})
+                });
+                const result = await res.json();
+                
+                if (res.status === 409) {
+                    showAlert('Email exists. Please sign in.', 'warning');
+                    showLogin();
+                    document.getElementById('loginEmail').value = email;
+                    return;
+                }
+                if (result.success) {
+                    localStorage.setItem('elderskill_user_id', result.data.user.id);
+                    showAlert('✅ Account created! Starting interview...', 'success');
+                    afterAuthRedirect(result.data.user.id);
+                }
+            } catch(e) { showAlert('Network error', 'error'); }
+        }
+        
+        async function handleLogin() {
+            hideAlert();
+            const email = document.getElementById('loginEmail').value.trim();
+            const password = document.getElementById('loginPassword').value;
+            
+            if (!email || !password) { showAlert('Enter email and password', 'error'); return; }
+            
+            try {
+                const res = await fetch('/api/auth/login', {
+                    method: 'POST', headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({email, password})
+                });
+                const result = await res.json();
+                
+                if (res.status === 404) { showAlert('No account found. Please sign up.', 'error'); return; }
+                if (res.status === 401) { showAlert('Incorrect password.', 'error'); return; }
+                if (result.success) {
+                    localStorage.setItem('elderskill_user_id', result.data.user.id);
+                    showAlert('✅ Sign in successful!', 'success');
+                    afterAuthRedirect(result.data.user.id);
+                }
+            } catch(e) { showAlert('Network error', 'error'); }
+        }
+    </script>
+</body>
+</html>

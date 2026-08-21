@@ -1,0 +1,5 @@
+# Same as requirements.txt but with CUDA-enabled PyTorch
+--extra-index-url https://download.pytorch.org/whl/cu121
+torch==2.1.0+cu121
+torchaudio==2.1.0+cu121
+# Rest same as requirements.txt
